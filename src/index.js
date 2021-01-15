@@ -443,7 +443,8 @@ export default class UserMention {
         searchTextbox.addEventListener('change', async function () {
             try {
                 const searchQuery = this.nodeValue;
-                const usersBasedOnSearchQuery = await fetch(classObj.searchAPIUrl + classObj.searchQuery);
+                const response = await fetch(classObj.searchAPIUrl + classObj.searchQuery);
+                const usersBasedOnSearchQuery = response.json().data;
 
                 const userListItems = classObj.createAllUserListItems(usersBasedOnSearchQuery);
 
