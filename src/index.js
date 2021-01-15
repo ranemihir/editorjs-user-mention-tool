@@ -118,7 +118,10 @@ export default class UserMention {
      * Returns the caret position and the selected node in the contentEditable element.
      * 
      * @param {HTMLElement} editableDiv 
-     * @returns
+     * 
+     * @returns {object} res
+     * @returns {integer} res.caretPos
+     * @returns {HTMLTextElement} res.selectedNode
      */
     getCaretPositionAndSelectedNode(editableDiv) {
         var caretPos = 0, sel, range;
@@ -155,8 +158,11 @@ export default class UserMention {
     }
 
     /**
+     * Focuses on the starting position of the provided textNode.
      * 
-     * @returns
+     * @param textNode - text node element
+     * 
+     * @returns null
      */
     focusAfterInsertingUserMention(textNode) {
         var range = document.createRange()
@@ -173,42 +179,46 @@ export default class UserMention {
      * Returns the exact caret position inside an editable div 
      * from top point in terms of left and right.
      * 
-     * @returns
+     * @returns {object} res
+     * @returns {integer} res.left - left position co-ordinate.
+     * @returns {integer} res.top - top position co-ordinate.
      */
     getUserMentionToolbarPosition() {
-        const sel = document.getSelection()
-        const r = sel.getRangeAt(0)
-        let rect
-        let r2
-        // supposed to be textNode in most cases
-        // but div[contenteditable] when empty
-        const node = r.startContainer
-        const offset = r.startOffset
+        const sel = document.getSelection();
+        const r = sel.getRangeAt(0);
+
+        let rect;
+        let r2;
+
+        const node = r.startContainer;
+        const offset = r.startOffset;
+
         if (offset > 0) {
-            // new range, don't influence DOM state
-            r2 = document.createRange()
-            r2.setStart(node, (offset - 1))
-            r2.setEnd(node, offset)
-            // https://developer.mozilla.org/en-US/docs/Web/API/range.getBoundingClientRect
-            // IE9, Safari?(but look good in Safari 8)
-            rect = r2.getBoundingClientRect()
-            return { left: rect.right, top: rect.top }
+            r2 = document.createRange();
+            r2.setStart(node, (offset - 1));
+            r2.setEnd(node, offset);
+
+            rect = r2.getBoundingClientRect();
+
+            return { left: rect.right, top: rect.top };
         } else if (offset < node.length) {
-            r2 = document.createRange()
-            // similar but select next on letter
-            r2.setStart(node, offset)
-            r2.setEnd(node, (offset + 1))
-            rect = r2.getBoundingClientRect()
-            return { left: rect.left, top: rect.top }
-        } else { // textNode has length
-            // https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect
-            rect = node.getBoundingClientRect()
-            const styles = getComputedStyle(node)
-            const lineHeight = parseInt(styles.lineHeight)
-            const fontSize = parseInt(styles.fontSize)
-            // roughly half the whitespace... but not exactly
-            const delta = (lineHeight - fontSize) / 2
-            return { left: rect.left, top: (rect.top + delta) }
+            r2 = document.createRange();
+
+            r2.setStart(node, offset);
+            r2.setEnd(node, (offset + 1));
+            rect = r2.getBoundingClientRect();
+
+            return { left: rect.left, top: rect.top };
+        } else {
+            rect = node.getBoundingClientRect();
+
+            const styles = getComputedStyle(node);
+            const lineHeight = parseInt(styles.lineHeight);
+            const fontSize = parseInt(styles.fontSize);
+
+            const delta = (lineHeight - fontSize) / 2;
+
+            return { left: rect.left, top: (rect.top + delta) };
         }
     }
 
@@ -216,6 +226,7 @@ export default class UserMention {
      * Creates and returns cache JSON object of user list item 
      * 
      * @param {Array} users 
+     * @paramm {string} baseUrl
      * 
      * @returns {object} usersCache
      */
@@ -251,7 +262,8 @@ export default class UserMention {
     /**
      * Creates and returns an array of all user list items.
      * 
-     * @param {Array} allUsers 
+     * @param {Array} users 
+     * @paramm {string} baseUrl
      * 
      * @returns {Array} userListItems - all user list item components.
      * @returns {HTMLElement} serListItems[i] - user list item component.
@@ -290,6 +302,9 @@ export default class UserMention {
 
     /**
      * Creates and returns user mention toolbar.
+     * 
+     * @param {HTMLElement} searchBar
+     * @param {HTMLElement} usersList
      * 
      * @returns {HTMLElement} user mention toolbar component.
      */
@@ -358,8 +373,17 @@ export default class UserMention {
      * @param {string} mainWrapper - editor holder property.
      */
     hideUserMentionToolbarAndChangeFocus(holder) {
+        /**
+         * Main class object.
+         */
         const classObj = this;
 
+        /**
+         * Event listner to listen to changes in the current content editable.
+         * if '@' is inserted, then shows the user mention toolbar.
+         * 
+         * @param {event} e 
+         */
         const eventListner = function (e) {
             classObj.prevCaretPosAndSelectedNode = classObj.getCaretPositionAndSelectedNode(classObj.prevActiveElement);
 
@@ -368,9 +392,10 @@ export default class UserMention {
             }
         };
 
+        /**
+         * Event listner to listen for focus event on editor.
+         */
         document.getElementById(holder).addEventListener('focusin', function () {
-
-
             if (classObj.nodes.userMentionToolbar != document.activeElement && !classObj.nodes.userMentionToolbar.contains(document.activeElement)) {
                 if (classObj.nodes.userMentionToolbar.style.display != 'none') {
                     classObj.hideUserMentionToolbar();
@@ -389,7 +414,7 @@ export default class UserMention {
     /**
      * Creates and returns the user list compoennt which contains all the user list item components.
      * 
-     * @param {Array} users 
+     * @param {Array} userListItems
      * 
      * @returns {HTMLElement} user list wrapper.
      */
