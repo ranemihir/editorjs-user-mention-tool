@@ -1,0 +1,25 @@
+{
+  "name": "user-mention",
+  "version": "1.0.0",
+  "keywords": [
+    "user mention",
+    "editorjs"
+  ],
+  "description": "User Mention Functionality",
+  "license": "MIT",
+  "main": "./dist/bundle.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development --watch"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.3",
+    "raw-loader": "^4.0.1",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  }
+}

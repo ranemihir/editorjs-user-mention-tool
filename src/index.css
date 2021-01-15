@@ -1,0 +1,122 @@
+.user-mention-toolbar {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    width: 200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    border-radius: 4px;
+    box-shadow: 0 3px 15px -3px rgba(13, 20, 33, 0.13);
+    
+    z-index: 99;
+}
+
+.user-mention-search-bar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 4px 4px 0 0;
+    padding: 4px;
+    background-color: #000000;
+}
+
+.user-mention-search-bar .search-icon{
+    color: #FFFFFF;
+    cursor: default;
+}
+
+.user-mention-search-bar .search-textbox{
+    color: #FFFFFF;
+    border: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin-left: -2px;
+}
+
+.search-textbox::placeholder { 
+    color: #BCBCBC;
+}
+
+.users-list-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    border-radius: 0 0 4px 4px;
+    border: 0.1px solid #707684;
+    height: 195px;
+    overflow-y: scroll;
+}
+
+.user-list-item-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 6px 10px;
+    border-bottom: 0.1px solid #707684;
+    box-sizing: border-box;
+    width: 100%;
+    cursor: pointer;
+    background-color: #FFFFFF;
+}
+
+.user-list-item-wrapper:hover{
+    background-color: #EFEFEF;
+}
+
+
+.user-list-item-wrapper .user-profile-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    margin-right: 10px;
+}
+
+.user-list-item-wrapper .user-profile-container .user-name-initial{
+    color: #FFFFFF;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.user-list-item-wrapper .user-metadata-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.user-list-item-wrapper .user-metadata-container .user-full-name{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    margin-bottom: 4px;
+}
+
+.user-list-item-wrapper .user-metadata-container .user-slug{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 12px;
+    color: #808080;
+}
+
+a{
+    border-radius: 3px;
+    color: #848484;
+    text-decoration: underline;
+    font-weight: 500;
+}
