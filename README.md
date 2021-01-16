@@ -25,7 +25,7 @@ new UserMention({
 ```
 
 | **Properties** | **Explaination**           | 
-|----------------------------------------------
+-----------------------------------------------
 | `holder`       | editorjs hodler property   |
 | `allUsers`     | all user objects           |
 | `baseUrl`      | base URL for linking users |
