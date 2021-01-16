@@ -1,3 +1,7 @@
+:root{
+    --primary: #000000;
+}
+
 .user-mention-toolbar {
     position: fixed;
     top: 20px;
@@ -21,7 +25,7 @@
     align-items: center;
     border-radius: 4px 4px 0 0;
     padding: 4px;
-    background-color: #000000;
+    background-color: var(--primary);
 }
 
 .user-mention-search-bar .search-icon{
@@ -77,7 +81,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000000;
+    background-color: var(--primary);
     border-radius: 50%;
     width: 36px;
     height: 36px;
