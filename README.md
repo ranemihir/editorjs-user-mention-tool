@@ -23,11 +23,12 @@ new UserMention({
     searchAPIUrl: 'https://www.searchapi.com/'
 });
 ```
-|----------------|----------------------------|
+
+## Properties
+
 | Properties     | Explaination               | 
 |----------------|----------------------------|
 | `holder`       | editorjs hodler property   |
 | `allUsers`     | all user objects           |
 | `baseUrl`      | base URL for linking users |
 | `searchAPIUrl` | search API URL             |
-|----------------|----------------------------|
