@@ -385,8 +385,14 @@ export default class UserMention {
          * @param {event} e 
          */
         const eventListner = function (e) {
+            /**
+             * Updates caret position and selected node on every key up.
+             */
             classObj.prevCaretPosAndSelectedNode = classObj.getCaretPositionAndSelectedNode(classObj.prevActiveElement);
 
+            /**
+             * Shows the user mention toolbar on inputting '@'.
+             */
             if (e.key == '@') {
                 classObj.showUserMentionToolbar();
             }
@@ -396,14 +402,26 @@ export default class UserMention {
          * Event listner to listen for focus event on editor.
          */
         document.getElementById(holder).addEventListener('focusin', function () {
+            /**
+             * Checks if the focused element is not user mention toolbar.
+             */
             if (classObj.nodes.userMentionToolbar != document.activeElement && !classObj.nodes.userMentionToolbar.contains(document.activeElement)) {
+                /**
+                 * Hides the user mention toolbar if it is being displayed.
+                 */
                 if (classObj.nodes.userMentionToolbar.style.display != 'none') {
                     classObj.hideUserMentionToolbar();
 
+                    /**
+                     * Focuses on the previous element after hiding.
+                     */
                     if (classObj.prevActiveElement && classObj.prevActiveElement != null) {
                         classObj.prevActiveElement.focus();
                     }
                 } else {
+                    /**
+                     * Updates previous active element and add the above event listner to it.
+                     */
                     classObj.prevActiveElement = document.activeElement;
                     classObj.prevActiveElement.addEventListener('keyup', eventListner);
                 }
@@ -467,15 +485,36 @@ export default class UserMention {
          */
         searchTextbox.addEventListener('change', async function () {
             try {
+                /**
+                 * Gets the inputted search query.
+                 */
                 const searchQuery = this.nodeValue;
+
+                /**
+                 * Fetch response from the search API
+                 */
                 const response = await fetch(classObj.searchAPIUrl + classObj.searchQuery);
+
+                /**
+                 * Gets a list of all user objects based on search query from search API.
+                 */
                 const usersBasedOnSearchQuery = response.json().data;
 
+                /**
+                 * Creates user list items from the received user objects.
+                 */
                 const userListItems = classObj.createAllUserListItems(usersBasedOnSearchQuery);
 
+                /**
+                 * Removes all the current user list items.
+                 */
                 classObj.nodes.usersList.innerHTML = '';
 
+                /**
+                 * Creates a new user list from the created user list items.
+                 */
                 classObj.nodes.userMentionToolbar.lastChild = classObj.createUsersList(userListItems);
+
             } catch (error) {
                 console.log(error);
             }
@@ -560,6 +599,10 @@ export default class UserMention {
          * Selects the user and appends its name with @ as a link in the paragraph data.
          */
         userListItemWrapper.addEventListener('click', function () {
+            /**
+             * Creates user mention link to be added in the previous input or 
+             * content editable element.
+             */
             const userMentionLink = create('a', [], {
                 href: baseUrl + userSlug,
                 target: "_blank",
@@ -568,17 +611,37 @@ export default class UserMention {
                 document.createTextNode('@' + userSlug)
             ]);
 
+            /**
+             * Gets caret position and selected node from which the '@' in inputted.
+             */
             const { caretPos, selectedNode } = classObj.prevCaretPosAndSelectedNode;
 
+            /**
+             * Slices the textNode into 2 parts where '@' is inputted.
+             */
             const firstHalf = document.createTextNode(selectedNode.textContent.slice(0, caretPos - 1));
             const secondHalf = document.createTextNode(selectedNode.textContent.slice(caretPos));
 
+            /**
+             * Inserts the link between the two halfs of the selected node.
+             */
             classObj.prevActiveElement.insertBefore(firstHalf, selectedNode);
             classObj.prevActiveElement.insertBefore(userMentionLink, selectedNode);
             classObj.prevActiveElement.insertBefore(secondHalf, selectedNode);
+
+            /**
+             * Removes the original text node.
+             */
             classObj.prevActiveElement.removeChild(selectedNode);
 
+            /**
+             * Hides the user mention toolbar once the user mention link is inserted.
+             */
             classObj.hideUserMentionToolbar();
+
+            /**
+             * Focus on the second half's 0th index.
+             */
             classObj.focusAfterInsertingUserMention(secondHalf);
         });
 
