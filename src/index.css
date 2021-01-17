@@ -54,7 +54,7 @@
     padding: 0;
     border-radius: 0 0 4px 4px;
     border: 0.1px solid #707684;
-    height: 195px;
+    max-height: 195px;
     overflow-y: scroll;
 }
 
