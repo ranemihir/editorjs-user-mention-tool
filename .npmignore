@@ -1,4 +1,9 @@
-.idea/
-src/
+.idea
+.babelrc
+.eslintrc
+example
+README.md
+.gitignore
+src
 webpack.config.js
 yarn.lock
