@@ -446,7 +446,9 @@ export default class UserMention {
          * border-bottom of last user list item is removed.
          * Because ther eis already a border of users list wrapper.
          */
-        usersListWrapper.lastChild.style.borderBottom = 0;
+        if (usersListWrapper.childNodes.length > 0) {
+            usersListWrapper.lastChild.style.borderBottom = 0;
+        }
 
         /**
          * Returns users list component.
