@@ -75,6 +75,18 @@ export default class UserMention {
          * Hides the user mention toolbar and changes the focus to previously focused input.
          */
         this.hideUserMentionToolbarAndChangeFocus(this.holder);
+
+        /**
+         * Main class object.
+         */
+        const classObj = this;
+
+        /**
+         * Hides user mention toolbar on page scroll
+         */
+        window.addEventListener('scroll', function () {
+            classObj.hideUserMentionToolbar();
+        });
     }
 
     /**
