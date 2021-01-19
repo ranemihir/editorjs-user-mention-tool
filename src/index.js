@@ -497,7 +497,7 @@ export default class UserMention {
         /**
          * Event lister that fetches users based on the inputted query.
          */
-        searchTextbox.addEventListener('change', async function () {
+        async function searchQueryListner() {
             try {
                 /**
                  * Gets the inputted search query.
@@ -532,7 +532,11 @@ export default class UserMention {
             } catch (error) {
                 console.log(error);
             }
-        });
+        }
+
+        searchTextbox.addEventListener('keyup', searchQueryListner);
+        searchTextbox.addEventListener('keydown', searchQueryListner);
+        searchTextbox.addEventListener('keypress', searchQueryListner);
 
         /**
          * Creates search bar.
