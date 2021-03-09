@@ -86,7 +86,7 @@
 
         saveButton.addEventListener('click', () => {
             editor.save().then(savedData => {
-                output.innerText = JSON.stringify(savedData, null, 4);
+                output.innerHTML = JSON.stringify(savedData, null, 4);
             });
         });
     </script>
