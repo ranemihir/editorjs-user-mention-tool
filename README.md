@@ -1,8 +1,8 @@
 # User Mention Functionality for Editor.js
 
-![Screenshot1](https://github.com/ranemihir/editorjs-user-mention-tool/blob/main/usertag-1.png)
+![Screenshot1](https://github.com/ranemihir/editorjs-user-mention-tool/blob/master/usertag-1.png)
 
-![Screenshot2](https://github.com/ranemihir/editorjs-user-mention-tool/blob/main/usertag-2.png)
+![Screenshot2](https://github.com/ranemihir/editorjs-user-mention-tool/blob/master/usertag-2.png)
 
 - The **User Mention Functionality** allows the editor.js to add tags which link to
 the selected users.
